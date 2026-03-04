@@ -11,11 +11,13 @@ const port = 3000;
 const commonData = JSON.parse(fs.readFileSync(path.join(__dirname, 'data/common.json'), 'utf8'));
 
 // Configuració HBS
-app.set('view engine', 'hbs');
-app.set('views', path.join(__dirname, 'views'));
-hbs.registerPartials(path.join(__dirname, 'views/partials'));
-app.use(express.static(path.join(__dirname, '../public')));
-
+app.engine('hbs', engine({
+	extname: '.hbs',
+	defaultLayout: false,
+		partialsDir: path.join(__dirname, 'views','partials'),
+}));
+app.set('view engine','hbs');
+app.set('views', path.join(__dirname,'views'));
 // Connexió a MySQL (Ajusta amb les teves credencials de Proxmox/Local)
 const pool = mysql.createPool({
     host: 'localhost',
