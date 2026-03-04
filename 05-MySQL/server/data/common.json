@@ -1,3 +1,10 @@
 {
-    "year": 2026
+  "siteTitle": "Sakila Movie Database",
+  "year": 2026,
+  "copyrightName": "Nil - IETI",
+  "menu": [
+    { "label": "Inici", "url": "/" },
+    { "label": "Pel·lícules", "url": "/movies" },
+    { "label": "Clients", "url": "/customers" }
+  ]
 }

@@ -1,6 +1,8 @@
-<nav>
-    <ul>
-        <li><a href="/">Inici</a></li>
-        <li><a href="/cursos">Cursos</a></li>
-    </ul>
-</nav>
+<header class="main-header">
+    <div class="logo">SAKILA<span>WEB</span></div>
+    <nav>
+        {{#each menu}}
+        <a href="{{this.url}}">{{this.label}}</a>
+        {{/each}}
+    </nav>
+</header>

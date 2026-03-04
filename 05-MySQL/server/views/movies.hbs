@@ -1,0 +1,13 @@
+{{> header}}
+{{> menu}}
+<h1>Pel·lícules Sakila</h1>
+<main class="grid-container">
+    {{#each movies}}
+    <div class="card">
+        <h3>{{this.title}}</h3>
+        <p>{{this.description}}</p>
+        <small><strong>Actors:</strong> {{this.actors}}</small>
+    </div>
+    {{/each}}
+</main>
+{{> footer}}
