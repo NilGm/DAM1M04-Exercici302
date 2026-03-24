@@ -95,6 +95,7 @@ app.get('/movies', async (req, res) => {
     }
 });
 
+
 // ACTIVAR SERVIDOR
 const httpServer = app.listen(port, () => {
     console.log(`Servidor engegat a: http://localhost:${port}`);

@@ -1,51 +1,162 @@
-:root {
-    --primary: #2c3e50;
-    --accent: #e74c3c;
-    --light: #f4f4f4;
-}
-
+/* --- CONFIGURACIÓN GENERAL --- */
 body {
     font-family: 'Roboto', sans-serif;
     margin: 0;
-    background-color: var(--light);
+    background-color: #f8f9fa; /* Un gris muy claro, más limpio que el blanco puro */
+    color: #333;
+    line-height: 1.6;
 }
 
-.container { padding: 20px; max-width: 1200px; margin: auto; }
-
-/* Menú */
-.main-header {
-    background: var(--primary);
+/* --- NAVEGACIÓN (Sticky y con degradado) --- */
+nav {
+    background: linear-gradient(135deg, #2c3e50, #1a252f);
     color: white;
-    padding: 1rem 2rem;
+    padding: 1.2rem 8%;
     display: flex;
     justify-content: space-between;
     align-items: center;
+    box-shadow: 0 4px 12px rgba(0,0,0,0.15);
+    position: sticky;
+    top: 0;
+    z-index: 1000;
 }
 
-.main-header a { color: white; margin-left: 15px; text-decoration: none; }
-.logo span { color: var(--accent); font-weight: bold; }
+.logo {
+    font-size: 1.6rem;
+    font-weight: 700;
+    letter-spacing: -1px;
+}
 
-/* Grid de Cards */
+.menu-links {
+    list-style: none;
+    display: flex;
+    gap: 30px;
+    margin: 0;
+    padding: 0;
+}
+
+.menu-links a {
+    color: rgba(255,255,255,0.8);
+    text-decoration: none;
+    font-weight: 500;
+    transition: all 0.3s ease;
+}
+
+.menu-links a:hover {
+    color: #e74c3c; /* Color acento al pasar el ratón */
+}
+
+/* --- CONTENEDOR Y TÍTULOS --- */
+.container { 
+    padding: 40px 20px; 
+    max-width: 1200px; 
+    margin: auto; 
+}
+
+h1 {
+    font-size: 2.2rem;
+    color: #2c3e50;
+    margin-bottom: 30px;
+    border-left: 6px solid #e74c3c; /* Barra lateral roja */
+    padding-left: 15px;
+}
+
+h2 {
+    color: #1a252f;
+    margin-top: 40px;
+    font-weight: 700;
+    border-bottom: 2px solid #eee;
+    padding-bottom: 10px;
+}
+
+/* --- GRID Y CARDS (Efecto Elevación) --- */
 .grid {
     display: grid;
-    grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
-    gap: 20px;
-    margin-top: 20px;
+    grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+    gap: 25px;
+    margin-top: 25px;
 }
 
 .card {
-    background: white;
-    padding: 15px;
-    border-radius: 8px;
-    box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+    background: #ffffff;
+    padding: 25px;
+    border-radius: 12px;
+    box-shadow: 0 4px 15px rgba(0,0,0,0.08);
+    transition: all 0.3s cubic-bezier(0.25, 0.8, 0.25, 1);
+    border: 1px solid rgba(0,0,0,0.05);
+    display: flex;
+    flex-direction: column;
 }
 
-.customer-card h4 { border-bottom: 2px solid var(--accent); padding-bottom: 5px; }
+.card:hover {
+    transform: translateY(-10px); /* Sube la tarjeta */
+    box-shadow: 0 15px 30px rgba(0,0,0,0.15); /* Sombra más profunda */
+    border-color: #e74c3c; /* El borde se vuelve rojo al pasar el ratón */
+}
 
-/* Footer */
+.card h3 {
+    margin: 0 0 15px 0;
+    color: #2c3e50;
+    font-size: 1.3rem;
+}
+
+.card p {
+    color: #7f8c8d;
+    font-size: 0.95rem;
+    margin-bottom: 15px;
+}
+
+/* --- CLIENTES ESPECÍFICO --- */
+.customer-card h4 { 
+    font-size: 0.85rem;
+    text-transform: uppercase;
+    color: #e74c3c;
+    margin-top: 20px;
+    letter-spacing: 1px;
+}
+
+.card ul {
+    list-style: none;
+    padding: 0;
+    font-size: 0.9rem;
+}
+
+.card li {
+    padding: 8px 0;
+    border-bottom: 1px solid #f0f0f0;
+}
+
+/* --- CATEGORÍAS (Estilo Tags/Píldoras) --- */
+.category-list {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 12px;
+    padding: 0;
+    list-style: none;
+    margin-top: 20px;
+}
+
+.category-list li {
+    background: #dfe6e9;
+    padding: 8px 18px;
+    border-radius: 50px;
+    font-size: 0.9rem;
+    font-weight: 600;
+    color: #2d3436;
+    transition: all 0.2s;
+    cursor: default;
+}
+
+.category-list li:hover {
+    background: #2c3e50;
+    color: white;
+}
+
+/* --- FOOTER --- */
 .main-footer {
     text-align: center;
-    padding: 20px;
-    background: #ddd;
-    margin-top: 40px;
+    padding: 50px;
+    background: #1a252f;
+    color: #bdc3c7;
+    margin-top: 60px;
 }
