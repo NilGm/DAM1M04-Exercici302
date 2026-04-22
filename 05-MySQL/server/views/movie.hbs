@@ -1,0 +1,16 @@
+{{> header}}
+{{> menu}}
+<main class="container">
+    <h1>Detalls: {{movie.title}}</h1>
+    <div class="card">
+        <p><strong>Descripció:</strong> {{movie.description}}</p>
+        <p><strong>Any:</strong> {{movie.release_year}}</p>
+        <p><strong>Idioma:</strong> {{movie.language}}</p>
+        <p><strong>Rating:</strong> {{movie.rating}}</p>
+        <div style="margin-top: 20px;">
+            <a href="/movieEdit/{{movie.film_id}}" style="background: #2c3e50; color: white; padding: 10px; border-radius: 5px; text-decoration: none;">Editar dades</a>
+            <a href="/movies" style="margin-left: 10px;">Tornar al llistat</a>
+        </div>
+    </div>
+</main>
+{{> footer}}

@@ -1,0 +1,26 @@
+{{> header}}
+{{> menu}}
+<main class="container">
+    <h1>Editar Pel·lícula</h1>
+    <div class="card">
+        <form action="/editarPeli" method="POST">
+            <input type="hidden" name="film_id" value="{{movie.film_id}}">
+            
+            <label>Títol:</label><br>
+            <input type="text" name="title" value="{{movie.title}}" required style="width: 100%; padding: 8px; margin-bottom: 15px;">
+            
+            <label>Descripció:</label><br>
+            <textarea name="description" style="width: 100%; padding: 8px; margin-bottom: 15px;">{{movie.description}}</textarea>
+            
+            <button type="submit" style="background: #2c3e50; color: white; padding: 10px; border: none; border-radius: 5px; cursor: pointer;">Actualitzar Canvis</button>
+        </form>
+
+        <hr style="margin: 30px 0;">
+
+        <form action="/esborrarPeli" method="POST" onsubmit="return confirm('Segur que vols esborrar-la?')">
+            <input type="hidden" name="film_id" value="{{movie.film_id}}">
+            <button type="submit" style="background: #e74c3c; color: white; padding: 10px; border: none; border-radius: 5px; cursor: pointer;">Esborrar Pel·lícula</button>
+        </form>
+    </div>
+</main>
+{{> footer}}

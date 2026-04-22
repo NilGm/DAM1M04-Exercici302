@@ -2,12 +2,19 @@
 {{> menu}}
 
 <main class="container">
-    <h1>Pel·lícules Sakila</h1>
+    <div style="display: flex; justify-content: space-between; align-items: center;">
+        <h1>Pel·lícules Sakila</h1>
+        <a href="/movieAdd" class="card" style="background: #e74c3c; color: white; text-decoration: none; padding: 10px 20px; border-radius: 8px; font-weight: bold;">+ Afegir Pel·lícula</a>
+    </div>
     
-    <div class="grid"> {{#each movies}}
-        <div class="card"> <h3>{{this.title}}</h3>
+    <div class="grid"> 
+        {{#each movies}}
+        <div class="card"> 
+            <h3>{{this.title}}</h3>
             <p>{{this.description}}</p>
             <p><small><strong>Actors:</strong> {{this.actors}}</small></p>
+            <hr>
+            <a href="/movie/{{this.film_id}}" style="color: #e74c3c; font-weight: bold; text-decoration: none;">🔍 Veure detalls / Editar</a>
         </div>
         {{/each}}
     </div>

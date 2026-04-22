@@ -1,0 +1,21 @@
+{{> header}}
+{{> menu}}
+<main class="container">
+    <h1>Afegir Nova Pel·lícula</h1>
+    <form action="/afegirPeli" method="POST" class="card">
+        <label>Títol:</label><br>
+        <input type="text" name="title" required style="width: 100%; padding: 8px; margin-bottom: 15px;">
+        
+        <label>Descripció:</label><br>
+        <textarea name="description" style="width: 100%; padding: 8px; margin-bottom: 15px;"></textarea>
+        
+        <label>Any de llançament:</label><br>
+        <input type="number" name="release_year" value="2026" style="width: 100%; padding: 8px; margin-bottom: 15px;">
+        
+        <label>ID Idioma (Ex: 1 per Anglès):</label><br>
+        <input type="number" name="language_id" value="1" required style="width: 100%; padding: 8px; margin-bottom: 15px;">
+        
+        <button type="submit" style="background: #27ae60; color: white; padding: 10px; border: none; border-radius: 5px; cursor: pointer;">Guardar Pel·lícula</button>
+    </form>
+</main>
+{{> footer}}

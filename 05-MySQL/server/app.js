@@ -22,6 +22,9 @@ app.use((req, res, next) => {
   res.setHeader('Cache-Control', 'no-store, no-cache, must-revalidate');
   next();
 });
+///////////////////////////////////////////////// Middleware per llegir dades de formularis POST
+app.use(express.urlencoded({ extended: true }));
+//////////////////////////////////////////////////
 
 // 3. CONEXIÓN MYSQL (Pool de conexiones)
 const pool = mysql.createPool({
@@ -95,6 +98,57 @@ app.get('/movies', async (req, res) => {
     }
 });
 
+// --- NOVES RUTES EXERCICI 303 ---
+
+// 1. Vista formulari afegir
+app.get('/movieAdd', (req, res) => {
+    res.render('movieAdd', { titolGlobal: 'Sakila Movies', any: 2026 });
+});
+
+// 2. Vista detallada
+app.get('/movie/:id', async (req, res) => {
+    const [rows] = await pool.query('SELECT f.*, l.name as language FROM film f JOIN language l ON f.language_id = l.language_id WHERE f.film_id = ?', [req.params.id]);
+    res.render('movie', { movie: rows[0], titolGlobal: 'Sakila Movies', any: 2026 });
+});
+
+// 3. Vista editar
+app.get('/movieEdit/:id', async (req, res) => {
+    const [rows] = await pool.query('SELECT * FROM film WHERE film_id = ?', [req.params.id]);
+    res.render('movieEdit', { movie: rows[0], titolGlobal: 'Sakila Movies', any: 2026 });
+});
+
+// --- CRIDES POST ---
+
+// A) Afegir
+app.post('/afegirPeli', async (req, res) => {
+    const { title, description, release_year, language_id } = req.body;
+    try {
+        await pool.query('INSERT INTO film (title, description, release_year, language_id) VALUES (?, ?, ?, ?)', 
+        [title, description, release_year, language_id]);
+        res.redirect('/movies');
+    } catch (err) { res.status(500).send("Error al crear: " + err.message); }
+});
+
+// B) Editar
+app.post('/editarPeli', async (req, res) => {
+    const { film_id, title, description } = req.body;
+    try {
+        await pool.query('UPDATE film SET title = ?, description = ? WHERE film_id = ?', 
+        [title, description, film_id]);
+        res.redirect('/movie/' + film_id);
+    } catch (err) { res.status(500).send("Error al editar: " + err.message); }
+});
+
+// C) Esborrar
+app.post('/esborrarPeli', async (req, res) => {
+    const { film_id } = req.body;
+    try {
+        // Nota: Sakila té restriccions de claus foranes (foreign keys). 
+        // Si la peli està llogada o té actors, pot donar error a menys que s'esborrin les relacions.
+        await pool.query('DELETE FROM film WHERE film_id = ?', [film_id]);
+        res.redirect('/movies');
+    } catch (err) { res.status(500).send("Error al esborrar (restricció de base de dades): " + err.message); }
+});
 
 // ACTIVAR SERVIDOR
 const httpServer = app.listen(port, () => {
