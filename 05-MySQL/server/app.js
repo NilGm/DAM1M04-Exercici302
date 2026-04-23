@@ -1,4 +1,4 @@
-]const express = require('express');
+const express = require('express');
 const { engine } = require('express-handlebars');
 const mysql = require('mysql2/promise');
 const path = require('path');
