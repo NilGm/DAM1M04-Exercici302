@@ -24,16 +24,34 @@ app.use((req, res, next) => {
   next();
 });
 
-// 3. CONEXIÓN MYSQL
-const pool = mysql.createPool({
-    host: 'localhost',
-    port: 3306,
-    user: 'root',
-    password: 'Calamot2023',
-    database: 'sakila',
-    waitForConnections: true,
-    connectionLimit: 10
-});
+// 3. CONEXIÓN MYSQL (Automática para Proxmox y Local con Túnel)
+let pool;
+
+// Comprobamos si estamos ejecutando el código dentro del Proxmox (Linux del servidor)
+// o si estás en tu entorno de desarrollo local
+if (process.env.NODE_ENV === 'production' || process.platform === 'linux' && !process.env.WSL_DISTRO_NAME) {
+    // Configuración cuando el código corre DIRECTAMENTE dentro de Proxmox
+    pool = mysql.createPool({
+        host: 'localhost',
+        port: 3306,
+        user: 'super',
+        password: '1234',
+        database: 'sakila',
+        waitForConnections: true,
+        connectionLimit: 10
+    });
+} else {
+    // Configuración desde tu LOCAL (Windows/WSL) usando el túnel activo
+    pool = mysql.createPool({
+        host: '127.0.0.1', // Usar la IP local fuerza al túnel a captar bien la ruta
+        port: 3307,
+        user: 'super',
+        password: '1234',
+        database: 'sakila',
+        waitForConnections: true,
+        connectionLimit: 10
+    });
+}
 
 // --- RUTES GET ---
 
