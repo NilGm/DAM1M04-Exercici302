@@ -24,34 +24,37 @@ app.use((req, res, next) => {
   next();
 });
 
-// 3. CONEXIÓN MYSQL (Automática para Proxmox y Local con Túnel)
+// Iniciar connexió MySQL
+// Detectar automáticamente si estamos en Proxmox (servidor remoto) o en Local
+const isProxmox = process.env.NODE_ENV === 'production' || (process.platform === 'linux' && !process.env.WSL_DISTRO_NAME);
+
+// Iniciar connexió MySQL usando un único objeto pool
 let pool;
 
-// Comprobamos si estamos ejecutando el código dentro del Proxmox (Linux del servidor)
-// o si estás en tu entorno de desarrollo local
-if (process.env.NODE_ENV === 'production' || process.platform === 'linux' && !process.env.WSL_DISTRO_NAME) {
-    // Configuración cuando el código corre DIRECTAMENTE dentro de Proxmox
-    pool = mysql.createPool({
-        host: 'localhost',
-        port: 3306,
-        user: 'super',
-        password: '1234',
-        database: 'sakila',
-        waitForConnections: true,
-        connectionLimit: 10
-    });
+if (isProxmox) {
+  // CONFIGURACIÓN EN PROXMOX: El código corre en el servidor, usa el puerto nativo
+  pool = mysql.createPool({
+    host: 'localhost',
+    port: 3306,
+    user: 'super',
+    password: '1234',
+    database: 'sakila',
+    waitForConnections: true,
+    connectionLimit: 10
+  });
 } else {
-    // Configuración desde tu LOCAL (Windows/WSL) usando el túnel activo
-    pool = mysql.createPool({
-        host: '127.0.0.1', // Usar la IP local fuerza al túnel a captar bien la ruta
-        port: 3307,
-        user: 'super',
-        password: '1234',
-        database: 'sakila',
-        waitForConnections: true,
-        connectionLimit: 10
-    });
+  // CONFIGURACIÓN EN LOCAL: El código corre en tu PC y pasa por el túnel (3307)
+  pool = mysql.createPool({
+    host: '127.0.0.1', // Forzar la IP ayuda a que el túnel de WSL no falle
+    port: 3307,
+    user: 'super',
+    password: '1234',
+    database: 'sakila',
+    waitForConnections: true,
+    connectionLimit: 10
+  });
 }
+
 
 // --- RUTES GET ---
 
